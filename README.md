@@ -4,7 +4,7 @@ A tiny program that automatically downloads and installs/updates Vencord for you
 
 ## Usage
 1. Download the latest `VencordFixer.exe` from Releases.
-2. If Windows Defender flips out, allow the thread. See below for why this happens.
+2. If Windows Defender flips out, allow it/add it as an exception. See below for why this happens.
 3. Put it wherever you keep small programs (Desktop, `C:\Tools\`, etc.)
 4. *(Optional)* Right-click > Create shortcut to place on:
    - Desktop
@@ -20,7 +20,7 @@ A tiny program that automatically downloads and installs/updates Vencord for you
 - It does all that invisibly (no windows, popups, nothing)
 
 ## Why does Windows Defender flip out?
-It's because we download the latest VencordInstallerCli.exe from [Vencord.dev](https://vencord.dev) and then immediately execute it to... ya know. Install vencord. You can see the source code for yourself above, or follow the build instructions to compile your own binary instead.
+It's because we download the latest `VencordInstallerCli.exe` from [Vencord.dev](https://vencord.dev) and then immediately execute it to... ya know. Install/Update Vencord. It is safe though, you can see the source code for yourself above, or follow the build instructions to compile your own binary instead.
 
 ## Build Instructions (Developers)
 1. Install [AutoHotkey 1.1](https://www.autohotkey.com/download/ahk-install.exe)
