@@ -24,7 +24,7 @@ It's because we download the latest `VencordInstallerCli.exe` from [Vencord.dev]
 
 ## Build Instructions
 1. Install [AutoHotkey 1.1](https://www.autohotkey.com/download/ahk-install.exe)
-2. Clone this repo: `git clone <repo-url>`
+2. Clone this repo: `git clone https://github.com/cheatfreak47/Vencord-Fixer.git`
 3. Run the script with `--build` 
 
 ## Requirements
