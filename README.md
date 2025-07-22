@@ -22,7 +22,7 @@ A tiny program that automatically downloads and installs/updates Vencord for you
 ## Why does Windows Defender flip out?
 It's because we download the latest `VencordInstallerCli.exe` from [Vencord.dev](https://vencord.dev) and then immediately execute it to... ya know. Install/Update Vencord. It is safe though, you can see the source code for yourself above, or follow the build instructions to compile your own binary instead.
 
-## Build Instructions (Developers)
+## Build Instructions
 1. Install [AutoHotkey 1.1](https://www.autohotkey.com/download/ahk-install.exe)
 2. Clone this repo: `git clone <repo-url>`
 3. Run the script with `--build` 
