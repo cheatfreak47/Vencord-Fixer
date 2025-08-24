@@ -15,13 +15,22 @@ if (!A_IsCompiled) {
 
 ; =============== MAIN OPERATION ===============
 
-;Check if VencordInstallerCli exists, if not, download it!
+;Check if VencordInstallerCli exists, if not, prompt to download it!
 IfNotExist, VencordInstallerCli.exe
 {
+    MsgBox, 0x24, Missing Dependency, VencordInstallerCli.exe is required but not found.`n`nWould you like to download it now? (7MB)
+
+    IfMsgBox, No
+    {
+        MsgBox, 16, Error, Cannot proceed without VencordInstallerCli. Exiting.
+        ExitApp
+    }
+
     UrlDownloadToFile, https://github.com/Vencord/Installer/releases/latest/download/VencordInstallerCli.exe, VencordInstallerCli.exe
+
     IfNotExist, VencordInstallerCli.exe
     {
-        MsgBox, 16, Error, Failed to download VencordInstallerCli.exe. Please check your connection.
+        MsgBox, 16, Error, Failed to download VencordInstallerCli.exe.`nPlease check your connection and try again.
         ExitApp
     }
 }
