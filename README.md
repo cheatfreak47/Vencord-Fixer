@@ -12,15 +12,15 @@ A tiny program that automatically downloads and installs/updates Vencord for you
 5. Open it and let it do its thing!
 
 ## What It Does
-- Downloads the latest `VencordInstallerCli.exe` if missing
+- Asks you if it can download the latest `VencordInstallerCli.exe` if missing
 - Force-closes Discord (saves you the trouble)
 - Updates VencordInstallerCli via `-update-self`
 - Installs Vencord to your local Discord folder
 - Restarts Discord automatically
 - It does all that invisibly (no windows, popups, nothing)
 
-## Why does Windows Defender flip out?
-It's because we download the latest `VencordInstallerCli.exe` from [Vencord.dev](https://vencord.dev) and then immediately execute it to... ya know. Install/Update Vencord. It is safe though, you can see the source code for yourself above, or follow the build instructions to compile your own binary instead.
+## Windows Defender flipping out?
+As of 1.0.1 it shouldn't do this anymore, but if it's complaining, it's because we download the latest `VencordInstallerCli.exe` from [Vencord.dev](https://vencord.dev) and execute it to Install/Update Vencord. You can see the source code for yourself above, or follow the build instructions to compile your own binary instead.
 
 ## Build Instructions
 1. Install [AutoHotkey 1.1](https://www.autohotkey.com/download/ahk-install.exe)
