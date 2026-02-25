@@ -13,40 +13,58 @@ if (!A_IsCompiled) {
     }
 }
 
+; =============== UPDATED USER FLOW ===============
+CheckForInstaller:
+    ; Check script dir first (always priority)
+    IfExist, VencordInstallerCli.exe
+    {
+        goto ExecuteVencord
+    }
+
+    ; Check Downloads folder second (stealth helper mode)
+    EnvGet, UserProfile, UserProfile
+    DownloadsPath := UserProfile . "\Downloads\VencordInstallerCli.exe"
+    IfExist, %DownloadsPath%
+    {
+        FileCopy, %DownloadsPath%, VencordInstallerCli.exe, 1
+        IfExist, VencordInstallerCli.exe
+        {
+            goto ExecuteVencord
+        }
+        else
+        {
+            MsgBox, 16, Error, Found file in Downloads but couldn't copy it!`n`nPlease move it manually to:`n%A_ScriptDir%
+            goto WaitForUser
+        }
+    }
+
+    ; Final fallback: Ask user to download
+    MsgBox, 0x24, File Needed, VencordInstallerCli.exe is missing!`n`n1. Download from:`ngithub.com/Vencord/Installer`n2. Save to THIS folder:`n%A_ScriptDir%`n...or just drop in Downloads!`n`nClick YES to open download page.
+
+    IfMsgBox, Yes
+    {
+        Run, https://github.com/Vencord/Installer/releases/latest
+    }
+
+WaitForUser:
+    MsgBox, 0x40, Ready When You Are, Place VencordInstallerCli.exe in either:`n- THIS folder: %A_ScriptDir%`n- OR your Downloads folder`n`nThen click OK to continue.
+    goto CheckForInstaller  ; Loop back like a responsible script
+
 ; =============== MAIN OPERATION ===============
+ExecuteVencord:
+    ; Murder Discord with extreme prejudice
+    RunWait, taskkill /f /im Discord.exe,, Hide
 
-;Check if VencordInstallerCli exists, if not, prompt to download it!
-IfNotExist, VencordInstallerCli.exe
-{
-    MsgBox, 0x24, Missing Dependency, VencordInstallerCli.exe is required but not found.`n`nWould you like to download it now? (7MB)
+    ; Update Vencord CLI (silent)
+    RunWait, %ComSpec% /c "VencordInstallerCli.exe" -update-self,, Hide
 
-    IfMsgBox, No
-    {
-        MsgBox, 16, Error, Cannot proceed without VencordInstallerCli. Exiting.
-        ExitApp
-    }
+    ; Install/Update Vencord
+    EnvGet, LocalAppData, LocalAppData
+    RunWait, %ComSpec% /c "VencordInstallerCli.exe" -location "%LocalAppData%\Discord" -install,, Hide
 
-    UrlDownloadToFile, https://github.com/Vencord/Installer/releases/latest/download/VencordInstallerCli.exe, VencordInstallerCli.exe
-
-    IfNotExist, VencordInstallerCli.exe
-    {
-        MsgBox, 16, Error, Failed to download VencordInstallerCli.exe.`nPlease check your connection and try again.
-        ExitApp
-    }
-}
-
-;Locate Discord
-EnvGet, LocalAppData, LocalAppData
-DiscordPath := LocalAppData . "\Discord\Update.exe"
-;First we hardkill discord, no mercy.
-RunWait, "taskkill" /f /im Discord.exe, , Hide
-;Ask VencordInstallerCli to Update Self
-RunWait, %ComSpec% /c "VencordInstallerCli.exe" -update-self, , Hide
-;Ask VencordInstallerCli to Install Vencord
-RunWait, %ComSpec% /c "VencordInstallerCli.exe" -location %LocalAppData%\Discord -install, , Hide
-;Star Discord and Exit
-Run, "%DiscordPath%" --processStart Discord.exe
-ExitApp
+    ; Restart Discord like nothing happened
+    Run, "%LocalAppData%\Discord\Update.exe" --processStart Discord.exe
+    ExitApp
 
 ; =============== BUILD SECTION ===============
 Build:
