@@ -60,7 +60,7 @@ ExecuteVencord:
 
     ; Install/Update Vencord
     EnvGet, LocalAppData, LocalAppData
-    RunWait, %ComSpec% /c "VencordInstallerCli.exe" -location "%LocalAppData%\Discord" -install,, Hide
+    RunWait, %ComSpec% /c "VencordInstallerCli.exe" -location %LocalAppData%\Discord -install, , Hide
 
     ; Restart Discord like nothing happened
     Run, "%LocalAppData%\Discord\Update.exe" --processStart Discord.exe
